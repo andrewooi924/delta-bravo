@@ -2,9 +2,9 @@
 Databases Week 2 Tutorial Class
 week2_student.sql
 
-student id:
-student name:
-last modified date:
+student id: 32713339
+student name: Ooi Yu Zhang
+last modified date: 8/3/2023
 
 */
 
