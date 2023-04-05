@@ -58,7 +58,7 @@
 <dataTypeScale>2</dataTypeScale>
 <ownDataTypeParameters>,7,2</ownDataTypeParameters>
 </Attribute>
-<Attribute name="pcat_id_1" id="154F4C20-8671-59DD-61B3-A63CA21F49DF">
+<Attribute name="pcat_id" id="154F4C20-8671-59DD-61B3-A63CA21F49DF">
 <createdBy>andrewooi</createdBy>
 <createdTime>2023-04-05 05:09:28 UTC</createdTime>
 <commentInRDBMS><![CDATA[product category id]]></commentInRDBMS>

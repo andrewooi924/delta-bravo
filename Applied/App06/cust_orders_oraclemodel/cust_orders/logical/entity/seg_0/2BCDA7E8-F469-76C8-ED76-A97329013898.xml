@@ -76,6 +76,20 @@
 <dataTypePrecision>7</dataTypePrecision>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="ol_id" id="9E18297F-CD0B-B854-97DF-2CB7F24858F8">
+<createdBy>andrewooi</createdBy>
+<createdTime>2023-04-05 05:21:33 UTC</createdTime>
+<commentInRDBMS><![CDATA[surrogate key]]></commentInRDBMS>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="1AF3ACF7-4CDC-AC8B-0AE3-987EAA4893F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="C148BF9A-B880-4D8D-3401-C17CE90DB080" name="ORDERLINE PK">
@@ -86,6 +100,18 @@
 <item key="1AF3ACF7-4CDC-AC8B-0AE3-987EAA4893F3" value="true"/>
 </engineerTo>
 <pk>true</pk>
+<usedAttributes>
+<attributeRef>9E18297F-CD0B-B854-97DF-2CB7F24858F8</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="F8A9D427-9A74-7D50-42D1-3AB0279EE2BC" name="orderline_nk">
+<createdBy>andrewooi</createdBy>
+<createdTime>2023-04-05 05:23:32 UTC</createdTime>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="1AF3ACF7-4CDC-AC8B-0AE3-987EAA4893F3" value="true"/>
+</engineerTo>
+<newElementsIDs>9A248568-9581-21BB-E051-58F482B7713A,11A603F8-A62B-C390-47C9-3AFB0D676F4A</newElementsIDs>
 <usedAttributes>
 <attributeRef>9A248568-9581-21BB-E051-58F482B7713A</attributeRef>
 <attributeRef>11A603F8-A62B-C390-47C9-3AFB0D676F4A</attributeRef>

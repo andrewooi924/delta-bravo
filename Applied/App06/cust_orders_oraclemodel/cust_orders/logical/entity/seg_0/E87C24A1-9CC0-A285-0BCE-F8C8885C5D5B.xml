@@ -80,11 +80,31 @@
 <engineerTo>
 <item key="1AF3ACF7-4CDC-AC8B-0AE3-987EAA4893F3" value="true"/>
 </engineerTo>
+<constraintName>chkcustlevel</constraintName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT025</logicalDatatype>
 <dataTypeSize>1</dataTypeSize>
+<listOfValues>
+<valueDef value="B" description="Bronze"/>
+<valueDef value="G" description="Gold"/>
+<valueDef value="S" description="Silver"/>
+</listOfValues>
 <ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="cust_email" id="4C28E659-C577-44E5-252D-21B4DECBBEEF">
+<createdBy>andrewooi</createdBy>
+<createdTime>2023-04-05 05:15:57 UTC</createdTime>
+<ownerDesignName>cust_orders</ownerDesignName>
+<engineerTo>
+<item key="1AF3ACF7-4CDC-AC8B-0AE3-987EAA4893F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">

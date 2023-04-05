@@ -15,7 +15,7 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="pcat_id_1" id="CC7A85FB-E77E-6AD5-9551-D5DF8549AE2F">
+<Attribute name="pcat_id" id="CC7A85FB-E77E-6AD5-9551-D5DF8549AE2F">
 <createdBy>andrewooi</createdBy>
 <createdTime>2023-04-05 04:39:52 UTC</createdTime>
 <commentInRDBMS><![CDATA[product category id]]></commentInRDBMS>
