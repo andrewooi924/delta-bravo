@@ -1,0 +1,109 @@
+SQL> 
+SQL> /* Question 1 */
+SQL> ALTER TABLE unit
+  2  ADD (unit_credit NUMBER(2) DEFAULT 6 NOT NULL,
+  3      CONSTRAINT check_unit_credit CHECK (unit_credit = 3 or unit_credit = 6 or unit_credit = 12));
+
+Error starting at line : 5 in command -
+ALTER TABLE unit
+ADD (unit_credit NUMBER(2) DEFAULT 6 NOT NULL,
+    CONSTRAINT check_unit_credit CHECK (unit_credit = 3 or unit_credit = 6 or unit_credit = 12))
+Error report -
+ORA-01430: column being added already exists in table
+01430. 00000 -  "column being added already exists in table"
+*Cause:    
+*Action:
+SQL> 
+SQL> COMMENT ON COLUMN unit.unit_credit IS
+  2      'Unit credit';
+
+Comment created.
+
+SQL> 
+SQL> /* Question 2 */
+SQL> CREATE TABLE course (
+  2      course_code         CHAR(5) NOT NULL,
+  3      course_name         VARCHAR2(50) NOT NULL,
+  4      course_totalpoints  NUMBER(3) NOT NULL
+  5  );
+
+Error starting at line : 13 in command -
+CREATE TABLE course (
+    course_code         CHAR(5) NOT NULL,
+    course_name         VARCHAR2(50) NOT NULL,
+    course_totalpoints  NUMBER(3) NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    
+*Action:
+SQL> 
+SQL> COMMENT ON COLUMN course.course_code IS
+  2      'Course code';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN course.course_name IS
+  2      'Course name';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN course.course_totalpoints IS 
+  2      'Course total points';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE course
+  2  ADD CONSTRAINT course_pk PRIMARY KEY (course_code);
+
+Error starting at line : 28 in command -
+ALTER TABLE course
+ADD CONSTRAINT course_pk PRIMARY KEY (course_code)
+Error report -
+ORA-02260: table can have only one primary key
+02260. 00000 -  "table can have only one primary key"
+*Cause:    Self-evident.
+*Action:   Remove the extra primary key.
+SQL> 
+SQL> /* Create table for associative entity between course and unit */
+SQL> CREATE TABLE course_unit (
+  2      course_code  CHAR(5) NOT NULL,
+  3      unit_code    CHAR(7) NOT NULL
+  4  );
+
+Error starting at line : 32 in command -
+CREATE TABLE course_unit (
+    course_code  CHAR(5) NOT NULL,
+    unit_code    CHAR(7) NOT NULL
+)
+Error report -
+ORA-00955: name is already used by an existing object
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    
+*Action:
+SQL> 
+SQL> COMMENT ON COLUMN course_unit.course_code IS
+  2      'Course code';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN course_unit.unit_code IS
+  2      'Unit code';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE course_unit
+  2  ADD (CONSTRAINT course_code_fk FOREIGN KEY (course_code) REFERENCES course(course_code),
+  3       CONSTRAINT unit_code_fk_2 FOREIGN KEY (unit_code) REFERENCES unit(unit_code),
+  4       CONSTRAINT course_unit_pk PRIMARY KEY (course_code, unit_code));
+
+Table COURSE_UNIT altered.
+
+SQL> 
+SQL> spool off
