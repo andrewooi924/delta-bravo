@@ -28,11 +28,26 @@ COMMENT ON COLUMN policy.policy_id IS
 COMMENT ON COLUMN policy.prop_no IS
     'Property number';
     
+COMMENT ON COLUMN policy.policy_startdate IS
+    'Policy start date';
+    
+COMMENT ON COLUMN policy.policy_type_code IS
+    'Policy type code';
+    
+COMMENT ON COLUMN policy.policy_length IS
+    'Policy length';
+    
+COMMENT ON COLUMN policy.insurer_code IS
+    'Insurer code';
+    
 ALTER TABLE policy
     ADD CONSTRAINT policy_pk PRIMARY KEY (policy_id);
     
 ALTER TABLE policy
     ADD CONSTRAINT unique_policy_startdate UNIQUE (policy_startdate);
+    
+ALTER TABLE policy
+    ADD CONSTRAINT check_policy_length CHECK (policy_length >= 6);
 
 /*Task 1: Add FK constraints*/
 ALTER TABLE policy
