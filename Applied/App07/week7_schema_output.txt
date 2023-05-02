@@ -6,6 +6,11 @@ SQL>
 SQL> /**/
 SQL> /* Place DROP commands at head of schema file*/
 SQL> /**/
+SQL> DROP TABLE course_unit PURGE;
+
+Table COURSE_UNIT dropped.
+
+SQL> 
 SQL> DROP TABLE enrolment PURGE;
 
 Table ENROLMENT dropped.
@@ -19,6 +24,11 @@ SQL>
 SQL> DROP TABLE unit PURGE;
 
 Table UNIT dropped.
+
+SQL> 
+SQL> DROP TABLE course PURGE;
+
+Table COURSE dropped.
 
 SQL> 
 SQL> /* Create Tables*/
