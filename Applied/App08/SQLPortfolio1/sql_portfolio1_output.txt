@@ -1,0 +1,184 @@
+SQL> 
+SQL> --****PLEASE ENTER YOUR DETAILS BELOW****
+SQL> --sql_portfolio1.sql
+SQL> 
+SQL> --Student ID: 32713339
+SQL> --Student Name: Ooi Yu Zhang
+SQL> --Unit Code: FIT2094
+SQL> --Tutorial Class No: 3
+SQL> 
+SQL> /*Task 1: CREATE table POLICY and non FK constraints*/
+SQL> CREATE TABLE policy( 
+  2      policy_id           NUMBER(7) NOT NULL,
+  3      prop_no             NUMBER(4) NOT NULL,
+  4      policy_startdate    Date      NOT NULL,
+  5      policy_type_code    CHAR(1)   NOT NULL,
+  6      policy_length       NUMBER(3) NOT NULL,
+  7      insurer_code        CHAR(3)   NOT NULL
+  8  );
+
+Table POLICY created.
+
+SQL> 
+SQL> COMMENT ON COLUMN policy.policy_id IS
+  2      'Policy ID (unique for each policy record)';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN policy.prop_no IS
+  2      'Property number';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN policy.policy_startdate IS
+  2      'Policy start date';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN policy.policy_type_code IS
+  2      'Policy type code';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN policy.policy_length IS
+  2      'Policy length';
+
+Comment created.
+
+SQL> 
+SQL> COMMENT ON COLUMN policy.insurer_code IS
+  2      'Insurer code';
+
+Comment created.
+
+SQL> 
+SQL> ALTER TABLE policy
+  2      ADD CONSTRAINT policy_pk PRIMARY KEY (policy_id);
+
+Table POLICY altered.
+
+SQL> 
+SQL> ALTER TABLE policy
+  2      ADD CONSTRAINT chk_policy_length CHECK (policy_length >= 6);
+
+Table POLICY altered.
+
+SQL> 
+SQL> ALTER TABLE policy
+  2      ADD CONSTRAINT policy_uq UNIQUE (policy_startdate, prop_no, policy_type_code);
+
+Table POLICY altered.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> /*Task 1: Add FK constraints*/
+SQL> ALTER TABLE policy
+  2      ADD CONSTRAINT prop_no_fk FOREIGN KEY (prop_no) 
+  3          REFERENCES property (prop_no);
+
+Table POLICY altered.
+
+SQL> 
+SQL> ALTER TABLE policy
+  2      ADD CONSTRAINT policy_typecode_fk FOREIGN KEY (policy_type_code)
+  3          REFERENCES policy_type (policy_type_code);
+
+Table POLICY altered.
+
+SQL> 
+SQL> ALTER TABLE policy
+  2      ADD CONSTRAINT insurer_code FOREIGN KEY (insurer_code)
+  3          REFERENCES insurer (insurer_code);
+
+Table POLICY altered.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> /*Task 2*/
+SQL> INSERT INTO policy VALUES (
+  2      policy_seq.NEXTVAL,
+  3      7145,
+  4      to_date('21-Apr-2023', 'dd-Mon-yyyy'),
+  5      ( SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Building')),
+  6      12,
+  7      ( SELECT insurer_code FROM insurer WHERE upper(insurer_name) = upper('Landlord Association'))
+  8  );
+
+1 row inserted.
+
+SQL> 
+SQL> INSERT INTO policy VALUES (
+  2      policy_seq.NEXTVAL,
+  3      9346,
+  4      to_date('21-Apr-2023', 'dd-Mon-yyyy'),
+  5      ( SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Building')),
+  6      12,
+  7      ( SELECT insurer_code FROM insurer WHERE upper(insurer_name) = upper('Landlord Association'))
+  8  );
+
+1 row inserted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> /*Task 3*/
+SQL> 
+SQL> UPDATE policy
+  2  SET policy_length = policy_length + 6 WHERE prop_no = 7145 AND policy_type_code = (SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Building'));
+
+1 row updated.
+
+SQL> 
+SQL> INSERT INTO policy VALUES (
+  2      policy_seq.NEXTVAL,
+  3      7145,
+  4      to_date('21-Apr-2023', 'dd-Mon-yyyy') + 10,
+  5      ( SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Contents')),
+  6      12,
+  7      ( SELECT insurer_code FROM insurer WHERE upper(insurer_name) = upper('Landlord Association'))
+  8  );
+
+1 row inserted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> /*Task 4*/
+SQL> 
+SQL> UPDATE policy
+  2  SET policy_length = policy_length - 6 WHERE prop_no = 7145 AND policy_type_code = (SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Building'));
+
+1 row updated.
+
+SQL> 
+SQL> DELETE FROM policy
+  2  WHERE prop_no = 7145 AND policy_type_code = (SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Contents'));
+
+1 row deleted.
+
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> 
+SQL> --Comment out SET ECHO and SPOOL commands before submitting your portfolio
+SQL> SPOOL OFF

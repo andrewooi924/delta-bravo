@@ -10,8 +10,6 @@
 --Unit Code: FIT2094
 --Tutorial Class No: 3
 
-DROP TABLE policy PURGE;
-
 /*Task 1: CREATE table POLICY and non FK constraints*/
 CREATE TABLE policy( 
     policy_id           NUMBER(7) NOT NULL,
@@ -47,18 +45,14 @@ ALTER TABLE policy
     ADD CONSTRAINT chk_policy_length CHECK (policy_length >= 6);
 
 ALTER TABLE policy
-    ADD CONSTRAINT policy_startdate_uq UNIQUE (policy_startdate);
+    ADD CONSTRAINT policy_uq UNIQUE (policy_startdate, prop_no, policy_type_code);
+    
+COMMIT;
 
 /*Task 1: Add FK constraints*/
 ALTER TABLE policy
     ADD CONSTRAINT prop_no_fk FOREIGN KEY (prop_no) 
-        REFERENCES property (prop_no);
-        
-ALTER TABLE policy
-    ADD CONSTRAINT prop_no_uq UNIQUE (prop_no);
-        
-ALTER TABLE policy
-    ADD CONSTRAINT policy_typecode_uq UNIQUE (policy_type_code);    
+        REFERENCES property (prop_no);  
     
 ALTER TABLE policy
     ADD CONSTRAINT policy_typecode_fk FOREIGN KEY (policy_type_code)
@@ -68,6 +62,8 @@ ALTER TABLE policy
     ADD CONSTRAINT insurer_code FOREIGN KEY (insurer_code)
         REFERENCES insurer (insurer_code);
         
+COMMIT;
+
 /*Task 2*/
 INSERT INTO policy VALUES (
     policy_seq.NEXTVAL,
@@ -78,9 +74,6 @@ INSERT INTO policy VALUES (
     ( SELECT insurer_code FROM insurer WHERE upper(insurer_name) = upper('Landlord Association'))
 );
 
-ALTER TABLE policy DISABLE CONSTRAINT policy_startdate_uq;
-ALTER TABLE policy DISABLE CONSTRAINT policy_typecode_uq;
-
 INSERT INTO policy VALUES (
     policy_seq.NEXTVAL,
     9346,
@@ -90,9 +83,6 @@ INSERT INTO policy VALUES (
     ( SELECT insurer_code FROM insurer WHERE upper(insurer_name) = upper('Landlord Association'))
 );
 
---ALTER TABLE policy ENABLE CONSTRAINT policy_startdate_uq;
---ALTER TABLE policy ENABLE CONSTRAINT policy_typecode_uq;
-
 COMMIT;
 
 /*Task 3*/
@@ -100,18 +90,14 @@ COMMIT;
 UPDATE policy
 SET policy_length = policy_length + 6 WHERE prop_no = 7145 AND policy_type_code = (SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Building'));
 
-ALTER TABLE policy DISABLE CONSTRAINT prop_no_uq;
-
 INSERT INTO policy VALUES (
     policy_seq.NEXTVAL,
     7145,
-    to_date('01-May-2023', 'dd-Mon-yyyy'),
+    to_date('21-Apr-2023', 'dd-Mon-yyyy') + 10,
     ( SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Contents')),
     12,
     ( SELECT insurer_code FROM insurer WHERE upper(insurer_name) = upper('Landlord Association'))
 );
-
---ALTER TABLE policy ENABLE CONSTRAINT prop_no_uq;
 
 COMMIT;
 
@@ -124,6 +110,7 @@ DELETE FROM policy
 WHERE prop_no = 7145 AND policy_type_code = (SELECT policy_type_code FROM policy_type WHERE upper(policy_type_desc) = upper('Contents'));
 
 COMMIT;
+
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
 --SPOOL OFF
 --SET ECHO OFF
