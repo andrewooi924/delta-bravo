@@ -33,6 +33,10 @@ from rent.tenant t
     join rent.rent r on t.tenant_no = r.tenant_no
     join rent.property p on p.prop_no = r.prop_no
     join rent.owner o on o.owner_no = p.owner_no
+where
+    to_char(r.rent_lease_start, 'yyyy') = '2022'
+    and r.rent_weekly_rate < 425
+    and r.rent_lease_period >= 6
 order by r.rent_lease_period desc, r.tenant_no;
 
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
