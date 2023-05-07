@@ -1,6 +1,6 @@
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
-SET ECHO ON
-SPOOL sql_portfolio2_basic_output.txt
+--SET ECHO ON
+--SPOOL sql_portfolio2_basic_output.txt
 
 --****PLEASE ENTER YOUR DETAILS BELOW****
 --sql_portfolio2_basic.sql
@@ -40,5 +40,5 @@ where
 order by r.rent_lease_period desc, r.tenant_no;
 
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
-SPOOL OFF
-SET ECHO OFF
+--SPOOL OFF
+--SET ECHO OFF
