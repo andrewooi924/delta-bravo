@@ -1,0 +1,80 @@
+SQL> 
+SQL> --****PLEASE ENTER YOUR DETAILS BELOW****
+SQL> --sql_portfolio2_basic.sql
+SQL> 
+SQL> --Student ID: 32713339
+SQL> --Student Name: Ooi Yu Zhang
+SQL> --Unit Code: FIT2094
+SQL> --Tutorial Class No: 3
+SQL> 
+SQL> 
+SQL> /*1*/
+SQL> -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
+SQL> -- ENSURE that your query is formatted and has a semicolon
+SQL> -- (;) at the end of this answer
+SQL> select maint_id, to_char(maint_datetime, 'dd-Mon-yyyy') as "MAINT_DATETIME", prop_address, owner_givname || ' ' || owner_famname as "OWNER_NAME", maint_desc, maint_cost
+  2  from rent.owner 
+  3      natural join rent.property 
+  4      natural join rent.maintenance
+  5  where maint_cost > 1000 
+  6      and maint_cost < 3000 
+  7      and upper(maint_assigned) = 'Y'
+  8  order by maint_cost desc, maint_datetime;
+
+  MAINT_ID MAINT_DATETIME       PROP_ADDRESS                                                                     OWNER_NAME                                MAINT_DESC                                         MAINT_COST
+---------- -------------------- -------------------------------------------------------------------------------- ----------------------------------------- -------------------------------------------------- ----------
+        12 07-Nov-2022          284 Princes Highway, Unit 1, 6856, South Annashire, Victoria                     Ronald Meere                              Fly screen replacement for front and back doors          1275
+         9 07-Oct-2022          284 Princes Highway, Unit 1, 6856, South Annashire, Victoria                     Ronald Meere                              Front door lock replacement                              1275
+
+SQL> 
+SQL> /*2*/
+SQL> -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
+SQL> -- ENSURE that your query is formatted and has a semicolon
+SQL> -- (;) at the end of this answer
+SQL> select r.rent_agreement_no, r.tenant_no, t.tenant_title || '. ' || t.tenant_givname || ' ' || t.tenant_famname as "TENANT_NAME", p.prop_address, o.owner_givname || ' ' || o.owner_famname as "OWNER_NAME", r.rent_lease_period || ' months' as "RENT_LEASE_PERIOD"
+  2  from rent.tenant t 
+  3      join rent.rent r on t.tenant_no = r.tenant_no
+  4      join rent.property p on p.prop_no = r.prop_no
+  5      join rent.owner o on o.owner_no = p.owner_no
+  6  order by r.rent_lease_period desc, r.tenant_no;
+
+RENT_AGREEMENT_NO  TENANT_NO TENANT_NAME                                      PROP_ADDRESS                                                                     OWNER_NAME                                RENT_LEASE_PERIOD                              
+----------------- ---------- ------------------------------------------------ -------------------------------------------------------------------------------- ----------------------------------------- -----------------------------------------------
+               26       2524 Mr. Rich Suggate                                 26 Hackett Knoll, Apt. 615, 6856, South Annashire, Victoria                      Ronald Meere                              12 months                                      
+               19       4971 Mr. Gustie Hugueville                            4633 Leannon Crescent, Suite 962, 1791, Lake Evaside, Tasmania                   Lilian Potter                             12 months                                      
+                8       4971 Mr. Gustie Hugueville                            4633 Leannon Crescent, Suite 962, 1791, Lake Evaside, Tasmania                   Lilian Potter                             12 months                                      
+               16       5518 Mrs. Diane De Bruyne                             9454 Ebert Crest, Suite 183, 4027, Trompview, New South Wales                    Jasun Clitsome                            12 months                                      
+                5       7150 Mrs. Aloin Breakspear                            9454 Ebert Crest, Suite 183, 4027, Trompview, New South Wales                    Jasun Clitsome                            12 months                                      
+               20       7764 Ms. Irving Legister                              86 Lola Circuit, Apt. 822, 3342, Emmafurt, Australian Capital Territory          Joela Boshers                             12 months                                      
+               11       7764 Ms. Irving Legister                              86 Lola Circuit, Apt. 822, 3342, Emmafurt, Australian Capital Territory          Joela Boshers                             12 months                                      
+               17       9147 Mr. Melly Jerger                                 9167 Heller Lane, Apt. 005, 3172, Alichester, Tasmania                           Geoffrey Berth                            12 months                                      
+               25       1286 Ms. Dacey Demchen                                928 Olivia Crest, Apt. 293, 4328, Connellymouth, Queensland                      Ludovika Wiggins                          9 months                                       
+               24       2720 Ms. Patricia Stroband                            531 Sienna Run, Suite 991, 6792, Boscoburgh, Queensland                          Ludovika Wiggins                          9 months                                       
+               18       7634 Ms. Guenna Walaron                               928 Olivia Crest, Apt. 293, 4328, Connellymouth, Queensland                      Ludovika Wiggins                          9 months                                       
+
+RENT_AGREEMENT_NO  TENANT_NO TENANT_NAME                                      PROP_ADDRESS                                                                     OWNER_NAME                                RENT_LEASE_PERIOD                              
+----------------- ---------- ------------------------------------------------ -------------------------------------------------------------------------------- ----------------------------------------- -----------------------------------------------
+               15       1068 Mrs. Haily Cuardall                              536 Emma Meadow, Suite 340, 9498, Woodland, Tasmania                             Geoffrey Berth                            6 months                                       
+                2       1068 Mrs. Haily Cuardall                              30 Cox Street, Suite 036, 1100, Fadelland, Tasmania                              Lilian Potter                             6 months                                       
+               10       1068 Mrs. Haily Cuardall                              30 Cox Street, Suite 036, 1100, Fadelland, Tasmania                              Lilian Potter                             6 months                                       
+                3       1907 Ms. Nadia Jerred                                 536 Emma Meadow, Suite 340, 9498, Woodland, Tasmania                             Geoffrey Berth                            6 months                                       
+               12       1907 Ms. Nadia Jerred                                 536 Emma Meadow, Suite 340, 9498, Woodland, Tasmania                             Geoffrey Berth                            6 months                                       
+               14       1907 Ms. Nadia Jerred                                 30 Cox Street, Suite 036, 1100, Fadelland, Tasmania                              Lilian Potter                             6 months                                       
+               23       2524 Mr. Rich Suggate                                 26 Hackett Knoll, Apt. 615, 6856, South Annashire, Victoria                      Ronald Meere                              6 months                                       
+                9       8836 Mr. Robinson Elderbrant                          22 Benjamin Track, Suite 722, 8157, Koelpinmouth, Australian Capital Territory   Joela Boshers                             6 months                                       
+                6       9147 Mr. Melly Jerger                                 9167 Heller Lane, Apt. 005, 3172, Alichester, Tasmania                           Geoffrey Berth                            6 months                                       
+               13       9147 Mr. Melly Jerger                                 9167 Heller Lane, Apt. 005, 3172, Alichester, Tasmania                           Geoffrey Berth                            6 months                                       
+               21       1286 Ms. Dacey Demchen                                928 Olivia Crest, Apt. 293, 4328, Connellymouth, Queensland                      Ludovika Wiggins                          3 months                                       
+
+RENT_AGREEMENT_NO  TENANT_NO TENANT_NAME                                      PROP_ADDRESS                                                                     OWNER_NAME                                RENT_LEASE_PERIOD                              
+----------------- ---------- ------------------------------------------------ -------------------------------------------------------------------------------- ----------------------------------------- -----------------------------------------------
+               22       1286 Ms. Dacey Demchen                                928 Olivia Crest, Apt. 293, 4328, Connellymouth, Queensland                      Ludovika Wiggins                          3 months                                       
+                1       8836 Mr. Robinson Elderbrant                          22 Benjamin Track, Suite 722, 8157, Koelpinmouth, Australian Capital Territory   Joela Boshers                             3 months                                       
+                7       8836 Mr. Robinson Elderbrant                          22 Benjamin Track, Suite 722, 8157, Koelpinmouth, Australian Capital Territory   Joela Boshers                             3 months                                       
+                4       7150 Mrs. Aloin Breakspear                            9454 Ebert Crest, Suite 183, 4027, Trompview, New South Wales                    Jasun Clitsome                            1 months                                       
+
+26 rows selected. 
+
+SQL> 
+SQL> --Comment out SET ECHO and SPOOL commands before submitting your portfolio
+SQL> SPOOL OFF
