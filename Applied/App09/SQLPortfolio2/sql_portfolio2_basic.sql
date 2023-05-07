@@ -1,6 +1,6 @@
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
---SET ECHO ON
---SPOOL sql_portfolio2_basic_output.txt
+SET ECHO ON
+SPOOL sql_portfolio2_basic_output.txt
 
 --****PLEASE ENTER YOUR DETAILS BELOW****
 --sql_portfolio2_basic.sql
@@ -19,10 +19,10 @@ select maint_id, to_char(maint_datetime, 'dd-Mon-yyyy') as "MAINT_DATETIME", pro
 from rent.owner 
     natural join rent.property 
     natural join rent.maintenance
-where maint_cost > 1000 
-    and maint_cost < 3000 
+where 
+    maint_cost between 1000 and 3000
     and upper(maint_assigned) = 'Y'
-order by maint_cost desc, maint_datetime;
+order by maint_cost desc, to_date(maint_datetime, 'dd-Mon-yyyy') desc;
 
 /*2*/
 -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
@@ -40,5 +40,5 @@ where
 order by r.rent_lease_period desc, r.tenant_no;
 
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
---SPOOL OFF
---SET ECHO OFF
+SPOOL OFF
+SET ECHO OFF
