@@ -27,7 +27,12 @@ order by "Total Cost" desc, tenant_no;
 -- ENSURE that your query is formatted and has a semicolon
 -- (;) at the end of this answer
 
-
+select tenant_no, tenant_title || '. ' || tenant_givname || ' ' || tenant_famname as "Tenant Name", prop_no, prop_address, count(rent_agreement_no) as "No. of Rental Agreements"
+from rent.property join rent.rent using (prop_no) join rent.tenant using (tenant_no)
+where upper(prop_address) like upper('%Tasmania')
+group by tenant_no, tenant_title, tenant_givname, tenant_famname, prop_no, prop_address
+having count(rent_agreement_no) > 1
+order by tenant_no;
 
 --Comment out SET ECHO and SPOOL commands before submitting your portfolio
 --SPOOL OFF
