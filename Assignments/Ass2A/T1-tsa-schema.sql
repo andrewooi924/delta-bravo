@@ -32,7 +32,7 @@ CREATE TABLE booking (
 );
 
 COMMENT ON COLUMN booking.booking_id IS
-    'Booking identifier (surrogate key)';
+    'Booking identifier (surrogate)';
 
 COMMENT ON COLUMN booking.resort_id IS
     'Resort identifier, for this booking';
