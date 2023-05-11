@@ -1,10 +1,10 @@
 --*****PLEASE ENTER YOUR DETAILS BELOW*****
 --T1-tsa-schema.sql
 
---Student ID:
---Student Name:
---Unit Code:
---Applied Class No:
+--Student ID: 32713339
+--Student Name: Ooi Yu Zhang
+--Unit Code: FIT2094
+--Applied Class No: 3
 
 /* Comments for your marker:
 
@@ -18,14 +18,112 @@
 -- are included. FK constraints are to be added at the end of this script
 
 -- BOOKING
+CREATE TABLE booking (
+    booking_id                 NUMBER(8) NOT NULL, --surrogate key
+    resort_id                  NUMBER(4) NOT NULL,
+    cabin_no                   NUMBER(3) NOT NULL,
+    booking_from               DATE       NOT NULL,
+    booking_to                 DATE       NOT NULL,
+    booking_noadults           NUMBER(2) NOT NULL,
+    booking_nochildren         NUMBER(2) NOT NULL,
+    booking_total_points_cost  NUMBER(4) NOT NULL,
+    member_id                  NUMBER(6) NOT NULL,
+    staff_id                   NUMBER(5) NOT NULL
+);
 
+COMMENT ON COLUMN booking.booking_id IS
+    'Booking identifier (surrogate key)';
 
+COMMENT ON COLUMN booking.resort_id IS
+    'Resort identifier, for this booking';
+    
+COMMENT ON COLUMN booking.cabin_no IS
+    'Cabin number within the resort, for this booking';
+    
+COMMENT ON COLUMN booking.booking_from IS
+    'Date booking from';
+
+COMMENT ON COLUMN booking.booking_to IS
+    'Date booking to';
+    
+COMMENT ON COLUMN booking.booking_noadults IS
+    'Booking number of adults';
+    
+COMMENT ON COLUMN booking.booking_nochildren IS
+    'Booking number of children';
+    
+COMMENT ON COLUMN booking.booking_total_points_cost IS
+    'Total cost to the member in points for this booking';
+
+COMMENT ON COLUMN booking.member_id IS
+    'Unique member identifier across TSA for member who made this booking';
+
+COMMENT ON COLUMN booking.staff_id IS
+    'Staff identifier of staff member who took this booking';
+    
+ALTER TABLE booking
+    ADD CONSTRAINT booking_pk PRIMARY KEY (booking_id);
+    
+ALTER TABLE booking
+    ADD CONSTRAINT booking_uq UNIQUE (resort_id, cabin_no, booking_from);
 
 -- CABIN
+CREATE TABLE cabin (
+    resort_id                NUMBER(4)     NOT NULL,
+    cabin_no                 NUMBER(3)     NOT NULL,
+    cabin_nobedrooms         NUMBER(1)     NOT NULL,
+    cabin_sleeping_capacity  NUMBER(2)     NOT NULL,
+    cabin_bathroom_type      CHAR(1)       NOT NULL,
+    cabin_points_cost_day    NUMBER(4)     NOT NULL,
+    cabin_description        VARCHAR2(250) NOT NULL
+);
 
+COMMENT ON COLUMN cabin.resort_id IS
+    'Resort identifier';
 
+COMMENT ON COLUMN cabin.cabin_no IS
+    'Cabin number within the resort';
+    
+COMMENT ON COLUMN cabin.cabin_nobedrooms IS
+    'Number of bedrooms in cabin';
+
+COMMENT ON COLUMN cabin.cabin_sleeping_capacity IS
+    'Cabin sleeping capacity';
+
+COMMENT ON COLUMN cabin.cabin_bathroom_type IS
+    'Type of cabin bathroom';
+
+COMMENT ON COLUMN cabin.cabin_points_cost_day IS
+    'Number of member points the cabin costs per day';
+    
+COMMENT ON COLUMN cabin.cabin_description IS
+    'Cabin description';
+    
+ALTER TABLE cabin
+    ADD CONSTRAINT cabin_pk PRIMARY KEY (resort_id, cabin_no);
+    
+ALTER TABLE cabin
+    ADD CONSTRAINT chk_cabin_nobedrooms CHECK (cabin_nobedrooms between 1 and 4);
+
+ALTER TABLE cabin
+    ADD CONSTRAINT chk_cabin_bathroomtype CHECK (cabin_bathroom_type IN ('I', 'C'));
 
 -- Add all missing FK Constraints below here
+ALTER TABLE booking
+    ADD CONSTRAINT booking_cabin_fk FOREIGN KEY (resort_id, cabin_no)
+        REFERENCES cabin (resort_id, cabin_no);
+        
+ALTER TABLE booking
+    ADD CONSTRAINT booking_memberid_fk FOREIGN KEY (member_id)
+        REFERENCES member (member_id);
+    
+ALTER TABLE booking
+    ADD CONSTRAINT booking_staffid_fk FOREIGN KEY (staff_id)
+        REFERENCES staff (staff_id);
+    
+ALTER TABLE cabin
+    ADD CONSTRAINT cabin_resortid_fk FOREIGN KEY (resort_id)
+        REFERENCES resort (resort_id);
                         
    
 
