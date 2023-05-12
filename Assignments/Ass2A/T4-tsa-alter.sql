@@ -16,7 +16,7 @@
 --4(a)
 /* Add column no_of_bookings to cabin table */
 ALTER TABLE cabin ADD (
-    no_of_bookings NUMBER(2) NOT NULL
+    no_of_bookings NUMBER(2)
 );
 
 /* Comment for new column */
@@ -127,3 +127,53 @@ desc staff;
 select * from staff;
 
 --4(c)
+/* Drop table statement for cleaning table */
+DROP TABLE cleaning CASCADE CONSTRAINTS PURGE;
+
+/* Create table for cleaning */
+CREATE TABLE cleaning (
+    resort_id NUMBER(4) NOT NULL,
+    cabin_no NUMBER(3) NOT NULL,
+    staff_id NUMBER(5) NOT NULL,
+    cleaning_date DATE NOT NULL,
+    cleaning_start_time VARCHAR2(6) NOT NULL,
+    cleaning_end_time VARCHAR2(6) NOT NULL
+);
+
+/* Comments for attributes for cleaning table */
+COMMENT ON COLUMN cleaning.resort_id IS
+    'Resort identifier';
+    
+COMMENT ON COLUMN cleaning.cabin_no IS
+    'Cabin number within the resort';
+    
+COMMENT ON COLUMN cleaning.staff_id IS
+    'Staff identifier of staff member who is in charge of cleaning';
+
+COMMENT ON COLUMN cleaning.cleaning_date IS
+    'Date cabin scheduled for cleaning';
+    
+COMMENT ON COLUMN cleaning.cleaning_start_time IS    
+    'Start time of cleaning cabin';
+    
+COMMENT ON COLUMN cleaning.cleaning_end_time IS
+    'End time of cleaning cabin';
+    
+/* Adding primary key constraint for cleaning table */
+ALTER TABLE cleaning
+    ADD CONSTRAINT cleaning_pk PRIMARY KEY (staff_id, resort_id, cabin_no);
+
+/* Adding foreign key constraints for cleaning table */
+ALTER TABLE cleaning
+    ADD CONSTRAINT cleaning_staff_fk FOREIGN KEY (staff_id)
+        REFERENCES staff (staff_id);
+        
+ALTER TABLE cleaning
+    ADD CONSTRAINT cleaning_cabin_fk FOREIGN KEY (resort_id, cabin_no)
+        REFERENCES cabin (resort_id, cabin_no);
+
+/* Displaying cleaning table */
+select * from cleaning;
+
+/* Displaying structure of cleaning table */
+desc cleaning;
