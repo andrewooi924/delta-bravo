@@ -34,11 +34,92 @@ UPDATE cabin c
     SET no_of_bookings = 
         NVL((SELECT count(booking_id) FROM booking b WHERE c.resort_id = b.resort_id and c.cabin_no = b.cabin_no GROUP BY resort_id, cabin_no), 0);
 
+COMMIT;
+
 /* Display table after update */
 SELECT * FROM cabin;
 
 --4(b)
+/* Drop table statement */
+DROP TABLE staff_role CASCADE CONSTRAINTS PURGE;
 
+/* Create new table for staff roles*/
+CREATE TABLE staff_role (
+    sr_id   CHAR(1)       NOT NULL,
+    sr_name CHAR(50)      NOT NULL,
+    sr_desc VARCHAR2(250) NOT NULL
+);
 
+/* Comments for attributes in staff role table */
+COMMENT ON COLUMN staff_role.sr_id IS
+    'Staff role identifier';
+
+COMMENT ON COLUMN staff_role.sr_name IS
+    'Staff role name';
+    
+COMMENT ON COLUMN staff_role.sr_desc IS
+    'Staff role description';
+
+/* Initialise primary key */
+ALTER TABLE staff_role
+    ADD CONSTRAINT staff_role_pk PRIMARY KEY (sr_id);
+    
+/* Insert values for staff role */
+INSERT INTO staff_role VALUES (
+    'A',
+    'Admin',
+    'Take bookings, and reply to customer inquiries'
+);
+
+INSERT INTO staff_role VALUES (
+    'C',
+    'Cleaning',
+    'Clean cabins and maintain resort''s public area'
+);
+
+INSERT INTO staff_role VALUES (
+    'M',
+    'Marketing',
+    'Prepare and present marketing ideas and deliverables'
+);
+
+COMMIT;
+    
+/* Display newly created table */
+select * from staff_role;
+
+/* Display structure of newly created table */
+desc staff_role;
+
+/* Display staff table before change */
+select * from staff;
+
+/* Display structure of staff table before change */
+desc staff;
+
+/* Add attribute to staff table */
+ALTER TABLE staff ADD (
+    sr_id CHAR(1)
+);
+
+/* Comment for new attribute in staff table */
+COMMENT ON COLUMN staff.sr_id IS
+    'Staff role identifier';
+    
+/* Add foreign key constraint for new attribute */
+ALTER TABLE staff
+    ADD CONSTRAINT staff_srid_fk FOREIGN KEY (sr_id)
+        REFERENCES staff_role (sr_id);
         
+UPDATE staff
+    SET sr_id = 'A';
+        
+COMMIT;
+
+/* Display table structural change for staff */
+desc staff;
+
+/* Display staff table with initialised roles */
+select * from staff;
+
 --4(c)
