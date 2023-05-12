@@ -125,9 +125,8 @@ ALTER TABLE cabin
     ADD CONSTRAINT cabin_resortid_fk FOREIGN KEY (resort_id)
         REFERENCES resort (resort_id);
                         
-   
 
---**Trigger for checking member points.**--
+--**Trigger for checking and updating member.member_points for each booking.**--
 --**Run this code before attempting Task 2 and Task 3**--
 --**DO NOT REMOVE. DO NOT MODIFY**--
 CREATE OR REPLACE TRIGGER check_member_points BEFORE
@@ -180,7 +179,7 @@ BEGIN
         SET
             member_points = var_mem_points
         WHERE
-            member_id = :new.member_id;
+            member_id = :old.member_id;
 
         dbms_output.put_line('Booking '
                              || :old.booking_id
@@ -209,7 +208,7 @@ BEGIN
             var_mem_points := var_mem_points - :new.booking_total_points_cost;
             UPDATE member
             SET
-                member_points = member_points + var_mem_points
+                member_points = var_mem_points
             WHERE
                 member_id = :new.member_id;
 
