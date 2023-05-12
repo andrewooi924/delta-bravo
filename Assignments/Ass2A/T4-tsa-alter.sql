@@ -106,6 +106,10 @@ ALTER TABLE staff ADD (
 COMMENT ON COLUMN staff.sr_id IS
     'Staff role identifier';
     
+/* Add check constraint for staff.sr_id */
+ALTER TABLE staff
+    ADD CONSTRAINT chk_staff_srid CHECK (sr_id IN ('A', 'C', 'M'));
+
 /* Add foreign key constraint for new attribute */
 ALTER TABLE staff
     ADD CONSTRAINT staff_srid_fk FOREIGN KEY (sr_id)
