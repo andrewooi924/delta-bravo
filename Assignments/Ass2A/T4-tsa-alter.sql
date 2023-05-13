@@ -136,8 +136,8 @@ CREATE TABLE cleaning (
     cabin_no NUMBER(3) NOT NULL,
     staff_id NUMBER(5) NOT NULL,
     cleaning_date DATE NOT NULL,
-    cleaning_start_time VARCHAR2(6) NOT NULL,
-    cleaning_end_time VARCHAR2(6) NOT NULL
+    cleaning_start_time DATE NOT NULL,
+    cleaning_end_time DATE NOT NULL
 );
 
 /* Comments for attributes for cleaning table */
@@ -161,7 +161,7 @@ COMMENT ON COLUMN cleaning.cleaning_end_time IS
     
 /* Adding primary key constraint for cleaning table */
 ALTER TABLE cleaning
-    ADD CONSTRAINT cleaning_pk PRIMARY KEY (staff_id, resort_id, cabin_no);
+    ADD CONSTRAINT cleaning_pk PRIMARY KEY (staff_id, resort_id, cabin_no, cleaning_date);
 
 /* Adding foreign key constraints for cleaning table */
 ALTER TABLE cleaning
