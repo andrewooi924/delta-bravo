@@ -55,8 +55,6 @@ INSERT INTO booking VALUES (
     (SELECT staff_id FROM staff WHERE upper(staff_gname) = upper('Reeba') and upper(staff_fname) = upper('Wildman') and staff_phone = '0493427245')
 );
 
-select * from booking;
-
 COMMIT;
 
 --3(d)
