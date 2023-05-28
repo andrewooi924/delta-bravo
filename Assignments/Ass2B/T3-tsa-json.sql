@@ -30,7 +30,7 @@ SELECT
                                 'winter' VALUE town_avg_winter_temp),
                   'no_of_resorts' VALUE count(resort_id),
                   'resorts' VALUE JSON_ARRAYAGG(JSON_OBJECT(
-                                '_id' VALUE resort_id,
+                                'id' VALUE resort_id,
                                 'name' VALUE resort_name,
                                 'address' VALUE resort_street_address,
                                 'phone' VALUE resort_phone,
