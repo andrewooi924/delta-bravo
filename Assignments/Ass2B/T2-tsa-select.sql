@@ -71,10 +71,10 @@ order by town_name, "REVIEWS_COMPLETED" desc, poi_name;
 
 select distinct m.resort_id, r.resort_name, m.member_no, ltrim(m.member_gname || ' ' || m.member_fname) as "MEMBER_NAME", to_char(m.member_date_joined, 'dd-Mon-yyyy') as "DATE_JOINED", 
 to_char(n.member_no) || ' ' || ltrim(m.member_gname || ' ' || m.member_fname) as "RECOMMENDED_BY_DETAILS",
-lpad(to_char(max(c.mc_total), '$0000'), 13, ' ') as "TOTAL_CHARGES"
+lpad(to_char(sum(c.mc_total), '$9999990'), 13, ' ') as "TOTAL_CHARGES"
 from tsa.resort r join tsa.member m on r.resort_id = m.resort_id join tsa.member n on m.member_id_recby = n.member_id join tsa.member_charge c on c.member_id = m.member_id
 group by m.resort_id, r.resort_name, m.member_no, m.member_gname, m.member_fname, m.member_date_joined, n.member_no
-having max(c.mc_total) < (select avg(mc_total) from tsa.member_charge)
+having sum(c.mc_total) < (select avg(mc_total) from tsa.member_charge)
 order by m.resort_id, m.member_no;
 
 /*2(f)*/
