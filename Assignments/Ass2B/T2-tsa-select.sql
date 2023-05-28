@@ -45,13 +45,24 @@ order by r.resort_id, n.member_id;
 -- ENSURE that your query is formatted and has a semicolon
 -- (;) at the end of this answer
 
-
+select p.poi_id, p.poi_name, lpad(nvl(to_char(max(r.review_rating)), 'NR'), 3, ' ') as "MAX_RATING", lpad(nvl(to_char(min(r.review_rating)), 'NR'), 3, ' ') as "MIN_RATING", lpad(nvl(to_char(avg(r.review_rating), '0.0'), 'NR'), 6, ' ') as "AVG_RATING" from tsa.point_of_interest p left outer join tsa.review r on p.poi_id = r.poi_id
+group by p.poi_id, p.poi_name
+order by p.poi_id;
 
 /*2(d)*/
 -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
 -- ENSURE that your query is formatted and has a semicolon
 -- (;) at the end of this answer
 
+select poi_name, poi_type_descr, town_name, lpad('Lat: ' || to_char(town_lat, '90.000000') || ' Long:' || to_char(town_long, '990.000000'), 35, ' ') as "TOWN_LOCATION", count(review_id) as "REVIEWS_COMPLETED", 
+ltrim(rpad((case 
+    when (count(review_id) / (select count(review_id) from tsa.review) * 100) > 0
+        then to_char((count(review_id) / (select count(review_id) from tsa.review) * 100), '990.00') || '%' 
+    else
+        'No reviews completed'
+    end), 20, ' ' )) as "PERCENT_OF_REVIEWS" from tsa.town natural join tsa.point_of_interest p left outer join tsa.review r on p.poi_id = r.poi_id natural join tsa.poi_type
+group by poi_name, poi_type_descr, town_name, town_lat, town_long
+order by town_name, "REVIEWS_COMPLETED" desc, poi_name;
 
 /*2(e)*/
 -- PLEASE PLACE REQUIRED SQL STATEMENT FOR THIS PART HERE
