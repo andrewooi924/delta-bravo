@@ -34,7 +34,7 @@ SELECT
                                 'name' VALUE resort_name,
                                 'address' VALUE resort_street_address,
                                 'phone' VALUE resort_phone,
-                                'year_built' VALUE resort_yr_built_purch,
+                                'year_built' VALUE EXTRACT(YEAR FROM resort_yr_built_purch),
                                 'company_name' VALUE company_name))
     FORMAT JSON )
     || ','
